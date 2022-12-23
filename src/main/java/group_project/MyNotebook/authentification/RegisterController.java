@@ -17,9 +17,15 @@ public class RegisterController {
 
     @PostMapping("/create")
     public ModelAndView create() {
-        //TODO implement code in comment below
-        //@ModelAttribute("user") UserDto user
-        //userService.save();
-        return new ModelAndView("register");
+        ModelAndView register = new ModelAndView("register");
+        try {
+            //TODO implement code in comment below
+            //@ModelAttribute("user") UserDto user
+            //userService.save();
+            throw new RuntimeException("Saving option is under development");
+        }catch (Exception e) {
+            e.printStackTrace();
+            return register.addObject("errorMessage", e.getMessage());
+        }
     }
 }
