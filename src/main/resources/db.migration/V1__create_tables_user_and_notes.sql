@@ -1,7 +1,8 @@
 CREATE TABLE users (
     id UUID NOT NULL PRIMARY KEY,
     user_name varchar(50),
-    password varchar(255)
+    password varchar(255),
+    email VARCHAR(255)
 );
 
 CREATE TABLE notes (

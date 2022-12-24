@@ -27,6 +27,9 @@ public class User {
     @JdbcTypeCode(SqlTypes.UUID)
     private UUID id;
 
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
     @Column(name = "user_name", nullable = false, unique = true)
     private String name;
 

@@ -1,4 +1,4 @@
-package group_project.MyNotebook.user.dto;
+package group_project.MyNotebook.user;
 
 import group_project.MyNotebook.role.Role;
 import lombok.Data;
