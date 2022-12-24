@@ -17,18 +17,15 @@
           <h1 class="title">Вход</h1>
           <form class="form-horizontal" action="/login" method="GET">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Логин">
+              <input type="email" name="email" class="form-control" placeholder="Логин">
             </div>
             <div class="form-group">
-              <input type="password" class="form-control" placeholder="Пароль">
+              <input type="password" name="password" class="form-control" placeholder="Пароль">
             </div>
             <button class="btn signin" type="submit">Войти</button><br>
           </form>
           <div class="form-horizontal">
-            <button class="btn signup"
-                    th:register-url="@{/register}"
-                    onclick="location.href=this.getAttribute('register-url')">Зарегистрироваться
-            </button><br>
+            <a class="btn signup" th:href="@{/register}">Зарегистрироваться</a><br>
           </div>
         </div>
       </div>
