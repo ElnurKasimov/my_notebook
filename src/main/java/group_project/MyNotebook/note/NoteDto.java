@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class Dto {
+public class NoteDto {
 
     private UUID id;
 
@@ -21,8 +21,12 @@ public class Dto {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "html")
+    private String html;
+
     @Enumerated(EnumType.STRING)
     private Access access;
+
     @ManyToOne
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
     private User user;

@@ -16,23 +16,23 @@ public class UserService {
     private final UserRepository repository;
     private final UserConverter converter;
 
-    public List<Dto> findAll(){
+    public List<UserDto> findAll(){
         return repository.findAll(Sort.by("email"))
                 .stream()
                 .map(converter::mapToDto)
                 .collect(Collectors.toList());
     }
 
-    public Dto get(UUID id) {
+    public UserDto get(UUID id) {
         return repository.findById(id)
                 .map(converter::mapToDto)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
-    public UUID create(Dto dto){
+    public UUID create(UserDto dto){
         return repository.save(converter.mapToDao(dto)).getId();
     }
 
-    public void update(UUID id, Dto dto){
+    public void update(UUID id, UserDto dto){
         dto.setId(id);
         repository.findById(id)
                 .map((p)->repository.save(converter.mapToDao(dto)))
@@ -43,7 +43,7 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public Dto findByUsername(String username){
+    public UserDto findByUsername(String username){
         return repository.findByEmail(username)
                 .map(converter::mapToDto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

@@ -4,17 +4,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class NoteConverter {
-    public Dto mapToDto(Note note) {
-        Dto dto = new Dto();
+    public NoteDto mapToDto(Note note) {
+        NoteDto dto = new NoteDto();
         dto.setId(note.getId());
         dto.setName(note.getName());
         dto.setContent(note.getContent());
+        dto.setHtml(note.getHtml());
         dto.setAccess(note.getAccess());
         dto.setUser(note.getUser());
         return dto;
     }
 
-    public Note mapToDao(Dto dto){
+    public Note mapToDao(NoteDto dto){
         Note note = new Note();
         note.setId(dto.getId());
         note.setName(dto.getName());

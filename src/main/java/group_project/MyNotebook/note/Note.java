@@ -31,11 +31,14 @@ public class Note {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "html")
+    private String html;
+
     @Enumerated(EnumType.STRING)
     private Access access;
 
     @ManyToOne
-    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @Override
