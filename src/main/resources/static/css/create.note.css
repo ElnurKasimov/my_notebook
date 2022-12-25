@@ -5,3 +5,6 @@
 .right {
     float:right;
 }
+.bordered {
+    margin: 20px 20px 20px 20px;
+}
