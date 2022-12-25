@@ -1,10 +1,11 @@
 package group_project.MyNotebook.note;
 
+import org.commonmark.node.Node;
+import org.commonmark.parser.Parser;
+import org.commonmark.renderer.html.HtmlRenderer;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -49,14 +50,27 @@ public class NoteController {
     }
 
     @GetMapping("/create")
-    public ModelAndView newNoteForm() {
+    public ModelAndView newNoteForm(Model model) {
+        model.addAttribute("note", new Note());
         return new ModelAndView("createNote");
+    }
+
+    @PostMapping("/create")
+    public ModelAndView save(Note note, Model model) {
+        note.setHtml(markdownToHTML(note.getContent()));
+        model.addAttribute("note", note);
+        return new ModelAndView("savedNote");
     }
 
     @GetMapping("/edit/{id}")
     public ModelAndView editNoteForm(@PathVariable("id") UUID id) {
-        return new ModelAndView("editNote");
+        ModelAndView editNote = new ModelAndView("editNote");
+        //savedNote = service find note by id
+        //savedNote.setHtml(markdownToHTML(post.getContent()));
+        //editNote.addObject("savedNote", savedNote);
+        return editNote;
     }
+
 
     @GetMapping("/share/{id}")
     public ModelAndView getSharedNote(@PathVariable("id") UUID id) {
@@ -68,5 +82,14 @@ public class NoteController {
             return new ModelAndView("error");
         }
         return share;
+    }
+
+    private String markdownToHTML(String markdown) {
+        Parser parser = Parser.builder()
+                .build();
+        Node document = parser.parse(markdown);
+        HtmlRenderer renderer = HtmlRenderer.builder()
+                .build();
+        return renderer.render(document);
     }
 }
