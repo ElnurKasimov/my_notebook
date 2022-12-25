@@ -2,7 +2,8 @@ CREATE TABLE users (
     id UUID NOT NULL PRIMARY KEY,
     user_name VARCHAR(50),
     password VARCHAR(255),
-    email VARCHAR(255)
+    email VARCHAR(255),
+    CONSTRAINT uc_users_email UNIQUE (email)
 );
 
 CREATE TABLE notes (
