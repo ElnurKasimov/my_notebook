@@ -17,11 +17,13 @@
                 <div class="form-group">
                     <label for="title">Имя:</label>
                     <input type="text" id="title" placeholder="Имя" autocomplete="off" class="form-control"
+                           minlength="5" maxlength="100" required
                            th:field="*{title}"/>
                 </div>
                 <div class="form-group">
                     <label for="content">Текст заметки:</label>
-                    <textarea type="text" rows="4" id="content" placeholder="Текст" class="form-control"
+                    <textarea type="text" rows="20" id="content" placeholder="Текст" class="form-control"
+                              minlength="5" maxlength="10000"
                               th:field="*{content}" autocomplete="off"></textarea>
                 </div>
                 <div>
