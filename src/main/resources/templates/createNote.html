@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Редактор заметок</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <link th:rel="stylesheet" th:href="@{/webjars/font-awesome/5.11.2/css/all.css} "/>
+    <link th:rel="stylesheet" th:href="@{/assets/simplemde/simplemde.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/css/create.note.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>Создание заметки</h1>
+    <div class="row mt-5">
+        <div class="col">
+            <form  th:object="${note}" method="POST">
+                <div class="form-group">
+                    <label for="title">Имя:</label>
+                    <input type="text" id="title" placeholder="Имя" autocomplete="off" class="form-control"
+                           th:field="*{title}"/>
+                </div>
+                <div class="form-group">
+                    <label for="content">Текст заметки:</label>
+                    <textarea type="text" rows="4" id="content" placeholder="Текст" class="form-control"
+                              th:field="*{content}" autocomplete="off"></textarea>
+                </div>
+                <div>
+                    <div class="inline-block">
+                        <input type="radio" id="public" name="access" value="PUBLIC">
+                        <label for="public">Публичная</label>
+                        <input type="radio" id="private" name="access" value="PRIVATE">
+                        <label for="private">Приватная</label>
+                    </div>
+                    <div class="right">
+                        <button class="btn btn-primary" type="submit" title="Сохранить">
+                            Сохранить
+                        </button>
+                        <a class="btn" th:href="@{/note/list}" title="Отмена">
+                            Отмена
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="@{/webjars/jquery/jquery.min.js}"></script>
+<script src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/assets/simplemde/simplemde.min.js}"></script>
+<script>
+    var simplemde = new SimpleMDE({element: document.getElementById("content")});
+</script>
+</body>
+</html>
