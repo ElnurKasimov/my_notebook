@@ -21,6 +21,7 @@ public class NoteConverter {
         note.setName(dto.getName());
         note.setContent(dto.getContent());
         note.setAccess(dto.getAccess());
+        note.setHtml(dto.getHtml());
         note.setUser(dto.getUser());
         return note;
     }
