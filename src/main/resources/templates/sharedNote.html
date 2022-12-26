@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Публичная заметка</title>
-    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/notes.css}">
+
 </head>
 <body>
 <div class="container">
@@ -15,7 +18,7 @@
             <h1 th:text="${note.name}">Имя</h1>
             <div th:utext="${note.html}">Контент</div>
         </span>
-        <a th:href="@{/note/list}" class="btn btn-primary">Назад</a>
+        <a th:href="@{/note/list}" class="btn">Назад</a>
     </div>
 </div>
 </body>

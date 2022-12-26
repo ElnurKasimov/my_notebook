@@ -1,5 +1,8 @@
 package group_project.MyNotebook.note;
 
+import group_project.MyNotebook.note.Access;
+import group_project.MyNotebook.note.NoteDto;
+import group_project.MyNotebook.note.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
@@ -75,10 +78,11 @@ public class NoteController {
     public ModelAndView getSharedNote(@PathVariable("id") UUID id) {
         ModelAndView share = new ModelAndView("sharedNote");
         NoteDto note = service.get(id);
-        if (note.getAccess().equals(Access.PUBLIC)) {
-            share.addObject("note", note);
-        } else {
+        if(note == null || note.getAccess().equals(Access.PRIVATE)){
             share.addObject("message", "Такой заметки не существует :(");
+        }
+        else if (note.getAccess().equals(Access.PUBLIC)) {
+            share.addObject("note", note);
         }
         return share;
     }

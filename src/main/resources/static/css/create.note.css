@@ -1,3 +1,11 @@
+.btns {
+  background-color: #337ab7;
+  border: none;
+  color: white;
+  padding: 12px 16px;
+  font-size: 16px;
+  cursor: pointer;
+}
 .inline-block {
     display:inline-block;
     float:left;
@@ -7,4 +15,7 @@
 }
 .bordered {
     margin: 20px 20px 20px 20px;
+}
+.center{
+    text-align:center;
 }
