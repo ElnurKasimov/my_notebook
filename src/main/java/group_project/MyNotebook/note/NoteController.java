@@ -1,8 +1,5 @@
 package group_project.MyNotebook.note;
 
-import group_project.MyNotebook.note.Access;
-import group_project.MyNotebook.note.NoteDto;
-import group_project.MyNotebook.note.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
