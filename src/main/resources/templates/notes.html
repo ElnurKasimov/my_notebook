@@ -21,7 +21,7 @@
             <small th:text="${#arrays.length(notesList)}"></small>
             <small>шт.&nbsp</small>
           </span>
-          <a class="btn" title="Создать новую заметку" th:href="@{/note/create}">
+          <a class="btn clr" title="Создать новую заметку" th:href="@{/note/create}">
             Создать
           </a>
         </h1>
@@ -46,13 +46,13 @@
                     <td th:text="${note.content}"></td>
                     <td th:text="${note.access}"></td>
                     <td style="width:160px">
-                      <a class="btn" title="Изменить" th:href="@{/note/edit/{id}(id=${note.id})}">
+                      <a class="btn clr" title="Изменить" th:href="@{/note/edit/{id}(id=${note.id})}">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                       </a>
-                      <a class="btn" title="Удалить" th:href="@{/note/delete/{id}(id=${note.id})}">
+                      <a class="btn clr" title="Удалить" th:href="@{/note/delete/{id}(id=${note.id})}">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </a>
-                      <button class="btn" title="Копировать адрес ссылки"
+                      <button class="btn clr" title="Копировать адрес ссылки"
                               th:onclick="copyToClipboard([[@{/note/share/{id}(id=${note.id})}]])">
                         <i class="fa fa-link" aria-hidden="true"></i>
                       </button>
