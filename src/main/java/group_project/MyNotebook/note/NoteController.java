@@ -15,38 +15,38 @@ import java.util.UUID;
 @RequestMapping("/note")
 public class NoteController {
 
-    @GetMapping("/list")
-    public ModelAndView getNotes() {
-        ModelAndView note = new ModelAndView("note");
-        //Temporary used in-memory notes list
-        List<NoteDto> noteDtoList = List.of(
-                new NoteDto(UUID.randomUUID(), "заметка 1",
-                        "тут какой-то тестовый тескт14внег ",
-                        "private"),
-                new NoteDto(UUID.randomUUID(), "имя 1",
-                        "тут какой-то тестовый тескт ввпкпкгнру еукеукекуе ыые кеве уе  кепвае ке",
-                        "public"),
-                new NoteDto(UUID.randomUUID(), "тестовое имя",
-                        "в анк н нн укнук нн5ун6457н 457рарвр",
-                        "private"),
-                new NoteDto(UUID.randomUUID(), "аривапьто56",
-                        "впеолимв енгрпмз 8тьйвпеоли мвенгрпмз8ть йвпеолимве нгрпм з8тьйв пеолимве нгрпмз8 тьйвпеол имвенгрп мз8тьй" +
-                                "вп еоли мвенгрпм з8тьйвпе олимвенгрпм з8тьйвпе олимве нг рпмз8 тьй впеолимв енгрп мз8тьйвпе олимвенгр пмз8тьй" +
-                                "впеол имвенгрп мз8тьй впеол имвенгрпм з8ть йвпе олимвенгр пмз8тьй впеоли мвенгрп мз8т ьйвпе олимве нгрпм з8тьй" +
-                                "впеол имве нгр пмз8ть йвпеолим венгрпм з8тьйвп еоли мвен грпмз8тьй впеоли мвенгрп мз8т ьйвпеоли венгрп мз8тьй",
-                        "private")
-        );
-        try {
-            //TODO implement code below
-            //noteService.getAll()
-            //List<NotesDto> notesList = noteService.getAll();
-            note.addObject("notesList", noteDtoList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return note.addObject("errorMessage", e.getMessage());
-        }
-        return note;
-    }
+//    @GetMapping("/list")
+//    public ModelAndView getNotes() {
+//        ModelAndView note = new ModelAndView("note");
+//        //Temporary used in-memory notes list
+//        List<NoteDto> noteDtoList = List.of(
+//                new NoteDto(UUID.randomUUID(), "заметка 1",
+//                        "тут какой-то тестовый тескт14внег ",
+//                        "private"),
+//                new NoteDto(UUID.randomUUID(), "имя 1",
+//                        "тут какой-то тестовый тескт ввпкпкгнру еукеукекуе ыые кеве уе  кепвае ке",
+//                        "public"),
+//                new NoteDto(UUID.randomUUID(), "тестовое имя",
+//                        "в анк н нн укнук нн5ун6457н 457рарвр",
+//                        "private"),
+//                new NoteDto(UUID.randomUUID(), "аривапьто56",
+//                        "впеолимв енгрпмз 8тьйвпеоли мвенгрпмз8ть йвпеолимве нгрпм з8тьйв пеолимве нгрпмз8 тьйвпеол имвенгрп мз8тьй" +
+//                                "вп еоли мвенгрпм з8тьйвпе олимвенгрпм з8тьйвпе олимве нг рпмз8 тьй впеолимв енгрп мз8тьйвпе олимвенгр пмз8тьй" +
+//                                "впеол имвенгрп мз8тьй впеол имвенгрпм з8ть йвпе олимвенгр пмз8тьй впеоли мвенгрп мз8т ьйвпе олимве нгрпм з8тьй" +
+//                                "впеол имве нгр пмз8ть йвпеолим венгрпм з8тьйвп еоли мвен грпмз8тьй впеоли мвенгрп мз8т ьйвпеоли венгрп мз8тьй",
+//                        "private")
+//        );
+//        try {
+//            //TODO implement code below
+//            //noteService.getAll()
+//            //List<NotesDto> notesList = noteService.getAll();
+//            note.addObject("notesList", noteDtoList);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return note.addObject("errorMessage", e.getMessage());
+//        }
+//        return note;
+//    }
 
     @GetMapping("/create")
     public ModelAndView newNoteForm() {
