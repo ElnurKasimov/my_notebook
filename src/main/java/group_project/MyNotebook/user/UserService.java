@@ -49,12 +49,6 @@ public class UserService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 
-    public UserDto findByEmail(String email){
-        return  repository.findByEmail(email)
-                .map(converter::mapToDto)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    }
-
     public boolean isExistEmail(String email){
         return repository.existsByEmail(email);
     }
