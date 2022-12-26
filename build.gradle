@@ -37,6 +37,17 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 }
 
+tasks.register("bootRunProd") {
+	group = "application"
+	description = "Runs the Spring Boot application with the prod profile"
+	doFirst {
+		tasks.bootRun.configure {
+			systemProperty("spring.profiles.active", "prod")
+		}
+	}
+	finalizedBy("bootRun")
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
 }
