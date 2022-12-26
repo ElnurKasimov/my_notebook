@@ -1,11 +1,27 @@
-.btn {
-  background-color: #337ab7;
+.btns {
   border: none;
-  color: white;
   padding: 12px 16px;
   font-size: 16px;
   cursor: pointer;
 }
 .bordered {
     margin: 20px 20px 20px 20px;
+}
+.inline-block {
+    display:inline-block;
+    float:left;
+}
+.right {
+    float:right;
+}
+.center{
+    text-align:center;
+}
+.clr {
+    background-color: #337ab7;
+    color: white;
+}
+.clr:hover {
+  background-color: #146bb5;
+  color: white;
 }

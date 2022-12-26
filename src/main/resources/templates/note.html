@@ -1,96 +1,44 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Мои заметки</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet" th:href="@{/plugins/datatables/dataTables.bootstrap.css}">
-    <link rel="stylesheet" th:href="@{/css/notes.css}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  </head>
-  <body>
-    <div class="content-wrapper bordered">
-      <section class="content-header">
-        <h1>
-          Мои заметки
-          <small th:text="${#arrays.length(notesList)}"></small>
-          <small>шт.&nbsp</small>
-          <a class="btn" title="Создать новую заметку" th:href="@{/note/create}">
-            Создать
-          </a>
-        </h1>
-      </section>
-      <section class="content">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="box">
-              <div class="box-body">
-                <table id="full-feature-table-1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Имя</th>
-                    <th>Содержимое</th>
-                    <th>Доступ</th>
-                    <th>Действия</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr th:each="note : ${notesList}">
-                    <td th:text="${note.name}"></td>
-                    <td th:text="${note.value}"></td>
-                    <td th:text="${note.access}"></td>
-                    <td style="width:160px">
-                      <a class="btn" title="Изменить" th:href="@{/note/update/{id}(id=${note.id})}">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                      </a>
-                      <a class="btn" title="Удалить" th:href="@{/note/delete/{id}(id=${note.id})}">
-                        <i class="fa fa-trash" aria-hidden="true"></i>
-                      </a>
-                      <button class="btn" title="Копировать адрес ссылки"
-                              th:onclick="copyToClipboard([[@{/note/share/{id}(id=${note.id})}]])">
-                        <i class="fa fa-link" aria-hidden="true"></i>
-                      </button>
-                    </td>
-                  </tr>
-                  </tbody>
-                </table>
-              </div>
+<head>
+</head>
+<body>
+    <div th:fragment="note">
+        <div class="row mt-5">
+            <div class="col">
+                <form  th:object="${note}" action="/note/create" method="POST">
+                    <input type="hidden" name="id" th:value="${note?.id}">
+                    <div class="form-group">
+                        <label for="name">Имя:</label>
+                        <input type="text" id="name" name="name" placeholder="Имя" autocomplete="off" class="form-control"
+                               minlength="5" maxlength="100" required
+                               th:field="*{name}" th:value="${note?.name}"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="content">Текст заметки:</label>
+                        <textarea type="text" id="content" name="content" placeholder="Текст" class="form-control"
+                                  autocomplete="off" minlength="5" maxlength="10000" rows="20"
+                                  th:field="*{content}" th:value="${note?.content}"></textarea>
+                    </div>
+                    <div>
+                        <div class="inline-block">
+                            <input type="radio" id="public" name="access" value="PUBLIC">
+                            <label for="public">Публичная</label>
+                            <input type="radio" id="private" name="access" th:value="PRIVATE" checked>
+                            <label for="private">Приватная</label>
+                        </div>
+                        <div class="right">
+                            <a class="btn btn-light" th:href="@{/note/list}" title="Отмена">
+                                Отмена
+                            </a>
+                            <button class="btn clr" type="submit" title="Сохранить">
+                                Сохранить
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-          </div>
         </div>
-      </section>
     </div>
-    <script th:src="@{/plugins/jQuery/jQuery-2.1.4.min.js}"></script>
-    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-    <script th:src="@{/plugins/datatables/jquery.dataTables.min.js}"></script>
-    <script th:src="@{/plugins/datatables/dataTables.bootstrap.min.js}"></script>
-    <script>
-      $(function () {
-        $('#full-feature-table-1').DataTable();
-        $('#simple-table').DataTable({
-          "paging": true,
-          "lengthChange": false,
-          "searching": false,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false
-        });
-      });
-    </script>
-    <script>
-      function copyToClipboard(uri) {
-        var inputc = document.body.appendChild(document.createElement("input"));
-        inputc.value = location.origin + uri;
-        inputc.focus();
-        inputc.select();
-        document.execCommand('copy');
-        inputc.parentNode.removeChild(inputc);
-        alert("Ссылка на заметку:\n " + inputc.value + "\n скопирована в буфер обмена.");
-      }
-    </script>
-  </body>
-</html>
+</body>
