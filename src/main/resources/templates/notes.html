@@ -43,7 +43,9 @@
                   <tbody>
                   <tr th:each="note : ${notesList}">
                     <td th:text="${note.name}"></td>
-                    <td th:text="${note.content}"></td>
+                    <td>
+                      <pre th:utext="${note.html}"></pre>
+                    </td>
                     <td th:text="${note.access}"></td>
                     <td style="width:160px">
                       <a class="btn clr" title="Изменить" th:href="@{/note/edit/{id}(id=${note.id})}">
