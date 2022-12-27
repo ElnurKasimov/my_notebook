@@ -10,7 +10,7 @@ CREATE TABLE notes (
     id UUID NOT NULL PRIMARY KEY,
     content VARCHAR(10000),
     name VARCHAR(50),
-    html VARCHAR(255),
+    html VARCHAR(20000),
     access VARCHAR(20),
     user_id UUID,
     FOREIGN KEY (user_id) REFERENCES users(id)
