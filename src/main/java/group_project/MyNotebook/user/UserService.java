@@ -3,6 +3,9 @@ package group_project.MyNotebook.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -15,6 +18,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository repository;
     private final UserConverter converter;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     public List<UserDto> findAll(){
         return repository.findAll(Sort.by("email"))
@@ -43,10 +47,20 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public UserDto findByUsername(String username){
-        return repository.findByEmail(username)
+    public String getUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
+    }
+
+    public UserDto findByUsername(){
+        return repository.findByEmail(getUsername())
                 .map(converter::mapToDto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
+    public void setPassword(UserDto user, String password) {
+        String passwordHash = passwordEncoder.encode(password);
+        user.setPassword(passwordHash);
     }
 
     public boolean isExistEmail(String email){
