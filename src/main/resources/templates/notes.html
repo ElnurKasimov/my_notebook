@@ -42,12 +42,12 @@
                   </thead>
                   <tbody>
                   <tr th:each="note : ${notesList}">
-                    <td th:text="${note.name}"></td>
-                    <td>
+                    <td th:text="${note.name}" style="width:15%"></td>
+                    <td style="width:70%">
                       <pre th:utext="${note.html}"></pre>
                     </td>
-                    <td th:text="${note.access}"></td>
-                    <td style="width:160px">
+                    <td th:text="${note.access}" style="width:auto"></td>
+                    <td style="width:auto">
                       <a class="btn clr" title="Изменить" th:href="@{/note/edit/{id}(id=${note.id})}">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                       </a>
