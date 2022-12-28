@@ -23,9 +23,11 @@
                     </div>
                     <div>
                         <div class="inline-block">
-                            <input type="radio" id="public" name="access" value="PUBLIC">
+                            <input type="radio" id="public" name="access" th:value="PUBLIC"
+                                   th:checked="${note.Access == T(group_project.MyNotebook.note.Access).PUBLIC} ? 'checked'">
                             <label for="public">Публичная</label>
-                            <input type="radio" id="private" name="access" th:value="PRIVATE" checked>
+                            <input type="radio" id="private" name="access" th:value="PRIVATE"
+                                   th:checked="${note.Access == T(group_project.MyNotebook.note.Access).PRIVATE} ? 'checked'">
                             <label for="private">Приватная</label>
                         </div>
                         <div class="right">

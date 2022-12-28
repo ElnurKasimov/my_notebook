@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Мои заметки</title>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/plugins/datatables/dataTables.bootstrap.css}">
     <link rel="stylesheet" th:href="@{/css/notes.css}">
@@ -42,10 +41,12 @@
                   </thead>
                   <tbody>
                   <tr th:each="note : ${notesList}">
-                    <td th:text="${note.name}"></td>
-                    <td th:text="${note.content}"></td>
-                    <td th:text="${note.access}"></td>
-                    <td style="width:160px">
+                    <td th:text="${note.name}" style="width:15%"></td>
+                    <td style="width:70%">
+                      <pre th:utext="${note.html}"></pre>
+                    </td>
+                    <td th:text="${note.access}" style="width:auto"></td>
+                    <td style="width:auto">
                       <a class="btn clr" title="Изменить" th:href="@{/note/edit/{id}(id=${note.id})}">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                       </a>

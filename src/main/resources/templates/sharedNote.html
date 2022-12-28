@@ -16,7 +16,7 @@
         </span>
         <span th:if="${note != null}">
             <h1 th:text="${note.name}">Имя</h1>
-            <div th:utext="${note.html}">Контент</div>
+            <pre class="text" th:utext="${note.html}"></pre>
         </span>
         <a th:href="@{/note/list}" class="btn">Назад</a>
     </div>

@@ -33,7 +33,10 @@ public class NoteController {
 
     @GetMapping("/create")
     public ModelAndView newNoteForm(Model model) {
-        model.addAttribute("note", new NoteDto());
+        NoteDto noteDto = new NoteDto();
+        noteDto.setAccess(Access.PRIVATE);
+        model.addAttribute("note", noteDto)
+        ;
         return new ModelAndView("createNote");
     }
 
