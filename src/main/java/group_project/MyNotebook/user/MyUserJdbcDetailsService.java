@@ -4,9 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,47 +16,34 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class MyUserJdbcDetailsService implements UserDetailsService {
-    private final NamedParameterJdbcTemplate jdbcTemplate;
+    private final UserService service;
+    private UserDto dto;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<UserDetails> userData = jdbcTemplate.query(
-                "SELECT password, email, role" +
-                        " FROM users AS u" +
-                        " INNER JOIN userRoles AS ur ON u.id = ur.user_id" +
-                        " INNER JOIN roles AS r ON r.id = ur.role_id" +
-                        " WHERE user_name = :userName",
-                Map.of("userName", username),
-                new UserDataRowMapper()
-        );
-        return userData.isEmpty() ? null : userData.get(0);
-    }
-
-    private static class UserDataRowMapper implements RowMapper<UserDetails> {
-
-        @Override
-        public UserDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
-            String role = rs.getString("role");
-            String password = rs.getString("password");
-            String email = rs.getString("email");
-
+        try {
+            dto = service.findByUsername(username);
             return new UserDetails() {
                 @Override
-                public Collection<? extends GrantedAuthority> getAuthorities() {
-                    return Collections.singleton(() -> "ROLE_" + role);
+                public List<SimpleGrantedAuthority> getAuthorities() {
+                    return dto.getRoles().stream()
+                            .map(roleDao ->
+                                    new SimpleGrantedAuthority(roleDao.getName()))
+                            .collect(Collectors.toList());
                 }
 
                 @Override
                 public String getPassword() {
-                    return password;
+                    return dto.getPassword();
                 }
 
                 @Override
                 public String getUsername() {
-                    return email;
+                    return dto.getName();
                 }
 
                 @Override
@@ -77,6 +66,9 @@ public class MyUserJdbcDetailsService implements UserDetailsService {
                     return true;
                 }
             };
+        } catch (ResponseStatusException e) {
+            throw new UsernameNotFoundException(username);
         }
+
     }
 }

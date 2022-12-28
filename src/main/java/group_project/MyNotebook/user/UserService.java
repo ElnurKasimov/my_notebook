@@ -57,6 +57,12 @@ public class UserService {
                 .map(converter::mapToDto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
+    public UserDto findByUsername(String userName) {
+        return repository.findByEmail(userName)
+                .map(converter::mapToDto)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+    }
 
     public void setPassword(UserDto user, String password) {
         String passwordHash = passwordEncoder.encode(password);
