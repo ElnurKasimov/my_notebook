@@ -23,6 +23,13 @@
           <a class="btn clr" title="Создать новую заметку" th:href="@{/note/create}">
             Создать
           </a>
+          <span style="float:right">
+            <small>Пользователь:&nbsp</small>
+            <p2 sec:authentication="name"></p2>
+            <a class="btn clr" title="Выход из аккаунта" th:href="@{/logout}">
+              Выйти
+            </a>
+          </span>
         </h1>
       </section>
       <section class="content">
