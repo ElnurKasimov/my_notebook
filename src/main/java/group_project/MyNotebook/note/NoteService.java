@@ -23,6 +23,13 @@ public class NoteService {
                 .collect(Collectors.toList());
     }
 
+    public List<NoteDto> findAll(String username){
+        return noteRepository.findByUsername(username)
+                .stream()
+                .map(noteConverter::mapToDto)
+                .collect(Collectors.toList());
+    }
+
         public NoteDto get(UUID id){
         return noteRepository.findById(id)
                 .map(noteConverter::mapToDto)
