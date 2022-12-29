@@ -1,15 +1,20 @@
 package group_project.MyNotebook.note;
 
+import group_project.MyNotebook.role.Role;
+import group_project.MyNotebook.user.UserDto;
+import group_project.MyNotebook.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -18,13 +23,18 @@ import java.util.UUID;
 @RequestMapping("/note")
 public class NoteController {
     private final String NOTE_LIST_PAGE = "/note/list";
-    private final NoteService service;
+    private final NoteService noteService;
+    private final UserService userService;
 
     @GetMapping("/list")
     public ModelAndView getNotes() {
         ModelAndView notes = new ModelAndView("notes");
         try {
-            notes.addObject("notesList", service.findAll());
+            UserDto user = userService.findByUsername();
+            List<NoteDto> notesList = (user.getRoles().get(0).getName().equals("ROLE_ADMIN"))
+                    ? noteService.findAll()
+                    : noteService.findAll(user);
+            notes.addObject("notesList", notesList);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +54,7 @@ public class NoteController {
     public ModelAndView editNoteForm(@PathVariable("id") UUID id) {
         ModelAndView editNote = new ModelAndView("editNote");
         try {
-            NoteDto note = service.get(id);
+            NoteDto note = noteService.get(id);
             note.setHtml(markdownToHTML(note.getContent()));
             editNote.addObject("note", note);
         } catch (Exception e) {
@@ -55,9 +65,11 @@ public class NoteController {
 
     @PostMapping("/create")
     public RedirectView saveNote(@ModelAttribute("note") NoteDto note) {
-        note.setHtml(markdownToHTML(note.getContent()));
         try {
-            service.create(note);
+            UserDto userDto = userService.findByUsername();
+            note.setHtml(markdownToHTML(note.getContent()));
+            note.setUser(userDto);
+            noteService.create(note);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -67,7 +79,7 @@ public class NoteController {
     @GetMapping("/delete/{id}")
     public RedirectView removeNote(@PathVariable("id") UUID id) {
         try {
-            service.delete(id);
+            noteService.delete(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,11 +89,10 @@ public class NoteController {
     @GetMapping("/share/{id}")
     public ModelAndView getSharedNote(@PathVariable("id") UUID id) {
         ModelAndView share = new ModelAndView("sharedNote");
-        NoteDto note = service.get(id);
-        if(note == null || note.getAccess().equals(Access.PRIVATE)){
+        NoteDto note = noteService.get(id);
+        if (note == null || note.getAccess().equals(Access.PRIVATE)) {
             share.addObject("message", "Такой заметки не существует :(");
-        }
-        else if (note.getAccess().equals(Access.PUBLIC)) {
+        } else if (note.getAccess().equals(Access.PUBLIC)) {
             share.addObject("note", note);
         }
         return share;
