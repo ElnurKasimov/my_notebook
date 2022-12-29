@@ -27,15 +27,15 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/img/**", "/resources/**")
+                .requestMatchers("/", "/register/**", "/login", "/css/**", "/js/**", "/img/**", "/resources/**")
                 .permitAll()
                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/note/list",true))
                 .logout()
                 .permitAll().deleteCookies()
         ;

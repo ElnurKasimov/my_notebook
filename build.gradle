@@ -26,6 +26,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation:3.0.0'
 	implementation 'org.flywaydb:flyway-core'
 	//implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity6', version: '3.1.1.RELEASE'
+	implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: '4.0.4.RELEASE'
 	implementation group: 'com.atlassian.commonmark', name: 'commonmark', version: '0.13.1'
 	implementation group: 'org.webjars', name: 'font-awesome', version: '5.11.2'
 	implementation group: 'org.webjars', name: 'bootstrap', version: '4.0.0-2'
