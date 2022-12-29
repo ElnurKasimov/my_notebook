@@ -2,6 +2,7 @@ package group_project.MyNotebook.note;
 
 
 import group_project.MyNotebook.user.User;
+import group_project.MyNotebook.user.UserDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,6 @@ public class NoteDto {
 
     @ManyToOne
     @JoinColumn(name = "user_id" , referencedColumnName = "id")
-    private User user;
+    private UserDto user;
 
 }
