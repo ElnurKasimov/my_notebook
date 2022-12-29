@@ -20,14 +20,14 @@ public class MyUserJdbcDetailsService implements UserDetailsService {
     private final NamedParameterJdbcTemplate jdbcTemplate;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         List<UserDetails> userData = jdbcTemplate.query(
                 "SELECT password, email, role" +
                         " FROM users AS u" +
                         " INNER JOIN userRoles AS ur ON u.id = ur.user_id" +
                         " INNER JOIN roles AS r ON r.id = ur.role_id" +
-                        " WHERE user_name = :userName",
-                Map.of("userName", username),
+                        " WHERE email = :userName",
+                Map.of("userName", email),
                 new UserDataRowMapper()
         );
         return userData.isEmpty() ? null : userData.get(0);
