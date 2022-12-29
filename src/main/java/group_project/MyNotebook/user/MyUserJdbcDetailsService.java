@@ -31,7 +31,6 @@ public class MyUserJdbcDetailsService implements UserDetailsService {
         );
         return userData.isEmpty() ? null : userData.get(0);
     }
-
     private static class UserDataRowMapper implements RowMapper<UserDetails> {
 
         @Override
