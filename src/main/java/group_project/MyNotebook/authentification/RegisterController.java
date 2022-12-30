@@ -31,7 +31,7 @@ public class RegisterController {
         try {
             if (userService.isExistEmail(user.getEmail())) {
                 throw new RuntimeException(
-                        String.format("%s Email уже зарегистрирован", user.getEmail()));
+                        String.format("email %s уже зарегистрирован", user.getEmail()));
             }
             createUser(user);
         } catch (Exception e) {

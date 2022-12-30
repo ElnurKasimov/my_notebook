@@ -36,6 +36,7 @@ public class WebSecurityConfig {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin(form -> form
+                        .usernameParameter("email")
                         .loginPage("/login")
                         .permitAll()
                         .defaultSuccessUrl("/note/list",true))
