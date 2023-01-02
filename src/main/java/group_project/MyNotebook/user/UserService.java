@@ -1,10 +1,9 @@
 package group_project.MyNotebook.user;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -32,8 +31,8 @@ public class UserService {
                 .map(converter::mapToDto)
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
-    public UUID create(UserDto dto){
-        return repository.save(converter.mapToDao(dto)).getId();
+    public void create(UserDto dto){
+        repository.save(converter.mapToDao(dto));
     }
 
     public void update(UUID id, UserDto dto){
@@ -47,15 +46,10 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public String getUsername() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return auth.getName();
-    }
-
-    public UserDto findByUsername(){
-        return repository.findByEmail(getUsername())
+    public UserDto findByEmail(String email){
+        return repository.findByEmail(email)
                 .map(converter::mapToDto)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     public void setPassword(UserDto user, String password) {

@@ -1,9 +1,13 @@
 package group_project.MyNotebook.note;
 
+import group_project.MyNotebook.user.UserConverter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+@RequiredArgsConstructor
 @Service
 public class NoteConverter {
+    private final UserConverter userConverter;
     public NoteDto mapToDto(Note note) {
         NoteDto dto = new NoteDto();
         dto.setId(note.getId());
@@ -11,7 +15,7 @@ public class NoteConverter {
         dto.setContent(note.getContent());
         dto.setHtml(note.getHtml());
         dto.setAccess(note.getAccess());
-        dto.setUser(note.getUser());
+        dto.setUser(userConverter.mapToDto(note.getUser()));
         return dto;
     }
 
@@ -22,7 +26,7 @@ public class NoteConverter {
         note.setContent(dto.getContent());
         note.setAccess(dto.getAccess());
         note.setHtml(dto.getHtml());
-        note.setUser(dto.getUser());
+        note.setUser(userConverter.mapToDao(dto.getUser()));
         return note;
     }
 }

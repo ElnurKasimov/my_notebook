@@ -5,13 +5,11 @@ import group_project.MyNotebook.user.UserDto;
 import group_project.MyNotebook.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/register")
@@ -19,6 +17,7 @@ import java.util.List;
 public class RegisterController {
     private final UserService userService;
     private final RoleService roleService;
+    private final RegistrationValidateService validateService;
 
     @GetMapping
     public ModelAndView register() {
@@ -28,20 +27,15 @@ public class RegisterController {
     @PostMapping("/create")
     public ModelAndView create(@ModelAttribute("user") UserDto user) {
         ModelAndView register = new ModelAndView("register");
-        try {
-            if (userService.isExistEmail(user.getEmail())) {
-                throw new RuntimeException(
-                        String.format("email %s уже зарегистрирован", user.getEmail()));
-            }
+        RegistrationValidateService.RegistrationStatus validateStatus = validateService.validate(user);
+        if (validateStatus.equals(RegistrationValidateService.RegistrationStatus.ok)) {
             createUser(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return register.addObject("errorMessage", e.getMessage());
         }
-        return new ModelAndView("login");
+        register.addObject("status", validateStatus);
+        return register;
     }
 
-    private void createUser(UserDto user){
+    private void createUser(UserDto user) {
         userService.setPassword(user, user.getPassword());
         user.setRoles(List.of(roleService.findByName("ROLE_USER")));
         userService.create(user);

@@ -1,13 +1,12 @@
 package group_project.MyNotebook.note;
 
-import group_project.MyNotebook.role.Role;
 import group_project.MyNotebook.user.UserDto;
 import group_project.MyNotebook.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +29,10 @@ public class NoteController {
     public ModelAndView getNotes() {
         ModelAndView notes = new ModelAndView("notes");
         try {
-            UserDto user = userService.findByUsername();
+            UserDto user = userService.findByEmail(getUserEmail());
             List<NoteDto> notesList = (user.getRoles().get(0).getName().equals("ROLE_ADMIN"))
                     ? noteService.findAll()
-                    : noteService.findAll(user);
+                    : noteService.findAll(user.getId());
             notes.addObject("notesList", notesList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -66,7 +65,7 @@ public class NoteController {
     @PostMapping("/create")
     public RedirectView saveNote(@ModelAttribute("note") NoteDto note) {
         try {
-            UserDto userDto = userService.findByUsername();
+            UserDto userDto = userService.findByEmail(getUserEmail());
             note.setHtml(markdownToHTML(note.getContent()));
             note.setUser(userDto);
             noteService.create(note);
@@ -105,5 +104,11 @@ public class NoteController {
         HtmlRenderer renderer = HtmlRenderer.builder()
                 .build();
         return renderer.render(document);
+    }
+
+    private String getUserEmail() {
+        return SecurityContextHolder
+                .getContext()
+                .getAuthentication().getName();
     }
 }
