@@ -8,5 +8,5 @@ A service for storing text notes with the ability to send and access these notes
 Prod profile database access environment variables:
 
 1. DB_URL - database connection url 
-2. DB_USERNAME = database connection username
-3. DB_PASSWORD = database connection password
+2. DB_USERNAME - database connection username
+3. DB_PASSWORD - database connection password
