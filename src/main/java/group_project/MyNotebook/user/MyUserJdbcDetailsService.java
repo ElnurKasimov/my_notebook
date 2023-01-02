@@ -18,7 +18,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MyUserJdbcDetailsService implements UserDetailsService {
     private final NamedParameterJdbcTemplate jdbcTemplate;
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         List<UserDetails> userData = jdbcTemplate.query(
@@ -32,7 +31,6 @@ public class MyUserJdbcDetailsService implements UserDetailsService {
         );
         return userData.isEmpty() ? null : userData.get(0);
     }
-
     private static class UserDataRowMapper implements RowMapper<UserDetails> {
 
         @Override
