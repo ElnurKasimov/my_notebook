@@ -13,9 +13,6 @@
         <h1>Создание заметки</h1>
         <div th:replace="~{note::note}">...</div>
     </div>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
     <script th:src="@{/assets/simplemde/simplemde.min.js}"></script>
     <script>
         var simplemde = new SimpleMDE({element: document.getElementById("content")});
