@@ -7,6 +7,6 @@ A service for storing text notes with the ability to send and access these notes
 
 Prod profile database access environment variables:
 
-1. DB_URL = jdbc:postgresql://mynotebook.cfo6rmedchmo.eu-west-2.rds.amazonaws.com:5432/mynotebook
-2. DB_USERNAME = postgres
-3. DB_PASSWORD = mynotebook
+1. DB_URL - database connection url 
+2. DB_USERNAME = database connection username
+3. DB_PASSWORD = database connection password
