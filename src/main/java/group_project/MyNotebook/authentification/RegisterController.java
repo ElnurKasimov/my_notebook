@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@SuppressWarnings("ClassCanBeRecord")
 @Controller
 @RequestMapping("/register")
 @RequiredArgsConstructor

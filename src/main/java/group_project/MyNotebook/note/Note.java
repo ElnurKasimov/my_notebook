@@ -11,6 +11,7 @@ import org.hibernate.type.SqlTypes;
 import java.util.Objects;
 import java.util.UUID;
 
+@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 @Entity
 @Table(name = "notes")
 @Setter

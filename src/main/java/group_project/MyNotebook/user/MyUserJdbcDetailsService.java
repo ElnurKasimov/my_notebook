@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+@SuppressWarnings("ClassCanBeRecord")
 @RequiredArgsConstructor
 public class MyUserJdbcDetailsService implements UserDetailsService {
     private final NamedParameterJdbcTemplate jdbcTemplate;

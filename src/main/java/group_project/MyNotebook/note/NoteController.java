@@ -16,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("ALL")
 @RequiredArgsConstructor
 @Controller
 @RestController
@@ -44,8 +45,7 @@ public class NoteController {
     public ModelAndView newNoteForm(Model model) {
         NoteDto noteDto = new NoteDto();
         noteDto.setAccess(Access.PRIVATE);
-        model.addAttribute("note", noteDto)
-        ;
+        model.addAttribute("note", noteDto);
         return new ModelAndView("createNote");
     }
 

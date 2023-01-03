@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@SuppressWarnings({"ClassCanBeRecord", "unused"})
 @Service
 @RequiredArgsConstructor
 public class UserService {
