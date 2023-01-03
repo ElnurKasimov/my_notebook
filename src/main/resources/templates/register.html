@@ -29,9 +29,6 @@
                      placeholder="Пароль">
             </div>
             <button class="btn signup" type="submit">Зарегистрироваться</button><br>
-            <div class="form-horizontal">
-              <a class="btn signin" th:href="@{/login}">Войти</a><br>
-            </div>
           </form>
           <div th:if="${status != null}">
             <p style="color:red" th:text="${status.description}">Error code placeholder</p>

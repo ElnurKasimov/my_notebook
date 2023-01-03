@@ -17,18 +17,26 @@
           <h1 class="title">Вход</h1>
           <form class="form-horizontal" action="/login" method="POST">
             <div class="form-group">
-              <input type="email" name="email" class="form-control" placeholder="Email">
+              <input type="email" name="email" class="form-control" minlength="5" maxlength="50" required
+                     placeholder="Email">
             </div>
             <div class="form-group">
-              <input type="password" name="password" class="form-control" placeholder="Пароль">
+              <input type="password" name="password" class="form-control" minlength="8" maxlength="100" required
+                     placeholder="Пароль">
             </div>
             <button class="btn signin" type="submit">Войти</button><br>
           </form>
-          <div th:if="${status != null}">
-            <p style="color:red" th:text="${status.description}">Error code placeholder</p>
-          </div>
           <div class="form-horizontal">
             <a class="btn signup" th:href="@{/register}">Зарегистрироваться</a><br>
+          </div>
+          <div th:if="${param.error}">
+            <p style="color:red">Ошибка авторизации</p>
+          </div>
+          <div th:if="${param.logout}">
+            <p style="color:red">Вы вышли из системы</p>
+          </div>
+          <div th:if="${status != null}">
+            <p style="color:green" th:text="${status.description}">Description</p>
           </div>
         </div>
       </div>

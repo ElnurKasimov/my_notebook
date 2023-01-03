@@ -5,11 +5,13 @@ import group_project.MyNotebook.user.UserDto;
 import group_project.MyNotebook.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/register")
@@ -27,9 +29,11 @@ public class RegisterController {
     @PostMapping("/create")
     public ModelAndView create(@ModelAttribute("user") UserDto user) {
         ModelAndView register = new ModelAndView("register");
+        ModelAndView login = new ModelAndView("login");
         RegistrationValidateService.RegistrationStatus validateStatus = validateService.validate(user);
         if (validateStatus.equals(RegistrationValidateService.RegistrationStatus.ok)) {
             createUser(user);
+            return login.addObject("status", validateStatus);
         }
         register.addObject("status", validateStatus);
         return register;
