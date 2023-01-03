@@ -10,10 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class MyUserJdbcDetailsService implements UserDetailsService {
@@ -29,7 +26,11 @@ public class MyUserJdbcDetailsService implements UserDetailsService {
                 Map.of("userName", email),
                 new UserDataRowMapper()
         );
-        return userData.isEmpty() ? null : userData.get(0);
+        if (userData.isEmpty()) {
+            throw new UsernameNotFoundException(String.format("User %s is not found", email));
+        } else {
+            return userData.get(0);
+        }
     }
     private static class UserDataRowMapper implements RowMapper<UserDetails> {
 
