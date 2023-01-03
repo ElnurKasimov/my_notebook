@@ -1,5 +1,7 @@
 package group_project.MyNotebook.note;
 
+import group_project.MyNotebook.user.UserConverter;
+import group_project.MyNotebook.user.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,13 @@ public class NoteService {
 
     public List<NoteDto> findAll(UUID userId) {
         return noteRepository.findByUserId(userId)
+                .stream()
+                .map(noteConverter::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<NoteDto> findAll(UserDto user){
+        return noteRepository.findByUser(new UserConverter().mapToDao(user))
                 .stream()
                 .map(noteConverter::mapToDto)
                 .collect(Collectors.toList());
