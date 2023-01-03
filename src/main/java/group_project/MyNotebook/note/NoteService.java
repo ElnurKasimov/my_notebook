@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("ClassCanBeRecord")
 @Service
 @RequiredArgsConstructor
 public class NoteService {
@@ -32,6 +33,7 @@ public class NoteService {
                 .collect(Collectors.toList());
     }
 
+    @SuppressWarnings("unused")
     public List<NoteDto> findAll(UserDto user){
         return noteRepository.findByUser(new UserConverter().mapToDao(user))
                 .stream()
