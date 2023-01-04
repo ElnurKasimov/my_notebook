@@ -17,7 +17,7 @@
           <div th:if="${errorMessage != null}">
             <p style="color:red" th:text="${errorMessage}">Error code placeholder</p>
           </div>
-          <h1 class="title">Регистрация</h1>
+          <h1 class="title">Реєстрація</h1>
           <form class="form-horizontal" action="/register/create" method="POST">
             <div class="form-group">
               <input type="email" name="email" class="form-control" minlength="5" maxlength="50" required
@@ -25,13 +25,13 @@
             </div>
             <div class="form-group">
               <input type="text" name="name" class="form-control" required
-                     placeholder="Имя">
+                     placeholder="Ім'я">
             </div>
             <div class="form-group">
               <input type="password" name="password" class="form-control" minlength="8" maxlength="100" required
                      placeholder="Пароль">
             </div>
-            <button class="btn signup" type="submit">Зарегистрироваться</button><br>
+            <button class="btn signup" type="submit">Зареєструватись</button><br>
           </form>
         </div>
       </div>

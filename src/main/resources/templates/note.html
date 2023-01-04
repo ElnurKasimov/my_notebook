@@ -10,13 +10,13 @@
                 <form  th:object="${note}" action="/note/create" method="POST">
                     <input type="hidden" name="id" th:value="${note?.id}">
                     <div class="form-group">
-                        <label for="name">Имя:</label>
-                        <input type="text" id="name" name="name" placeholder="Имя" autocomplete="off" class="form-control"
+                        <label for="name">Ім'я:</label>
+                        <input type="text" id="name" name="name" placeholder="Ім'я" autocomplete="off" class="form-control"
                                minlength="5" maxlength="100" required
                                th:field="*{name}" th:value="${note?.name}"/>
                     </div>
                     <div class="form-group">
-                        <label for="content">Текст заметки:</label>
+                        <label for="content">Текст нотатки:</label>
                         <textarea type="text" id="content" name="content" placeholder="Текст" class="form-control"
                                   autocomplete="off" minlength="5" maxlength="10000" rows="20"
                                   th:field="*{content}" th:value="${note?.content}"></textarea>
@@ -25,17 +25,17 @@
                         <div class="inline-block">
                             <input type="radio" id="public" name="access" th:value="PUBLIC"
                                    th:checked="${note.Access == T(group_project.MyNotebook.note.Access).PUBLIC} ? 'checked'">
-                            <label for="public">Публичная</label>
+                            <label for="public">Публічна</label>
                             <input type="radio" id="private" name="access" th:value="PRIVATE"
                                    th:checked="${note.Access == T(group_project.MyNotebook.note.Access).PRIVATE} ? 'checked'">
-                            <label for="private">Приватная</label>
+                            <label for="private">Приватна</label>
                         </div>
                         <div class="right">
-                            <a class="btn btn-light" th:href="@{/note/list}" title="Отмена">
-                                Отмена
+                            <a class="btn btn-light" th:href="@{/note/list}" title="Відмінити">
+                                Відмінити
                             </a>
-                            <button class="btn clr" type="submit" title="Сохранить">
-                                Сохранить
+                            <button class="btn clr" type="submit" title="Створити">
+                                Створити
                             </button>
                         </div>
                     </div>

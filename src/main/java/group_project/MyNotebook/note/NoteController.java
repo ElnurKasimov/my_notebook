@@ -1,13 +1,11 @@
 package group_project.MyNotebook.note;
 
-import group_project.MyNotebook.role.Role;
 import group_project.MyNotebook.user.UserDto;
 import group_project.MyNotebook.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -91,7 +89,7 @@ public class NoteController {
         ModelAndView share = new ModelAndView("sharedNote");
         NoteDto note = noteService.get(id);
         if (note == null || note.getAccess().equals(Access.PRIVATE)) {
-            share.addObject("message", "Такой заметки не существует :(");
+            share.addObject("message", "Такої нотатки не існує :(");
         } else if (note.getAccess().equals(Access.PUBLIC)) {
             share.addObject("note", note);
         }

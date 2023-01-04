@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Публичная заметка</title>
+    <title>Публічна замітка</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/notes.css}">
@@ -15,7 +15,7 @@
             <div th:text="${message}"></div>
         </span>
         <span th:if="${note != null}">
-            <h1 th:text="${note.name}">Имя</h1>
+            <h1 th:text="${note.name}">Ім'я</h1>
             <pre class="text" th:utext="${note.html}"></pre>
         </span>
         <a th:href="@{/note/list}" class="btn">Назад</a>
