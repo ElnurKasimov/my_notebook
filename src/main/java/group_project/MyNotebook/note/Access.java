@@ -4,7 +4,11 @@ import lombok.Getter;
 
 @Getter
 public enum Access {
-    PRIVATE,
-    PUBLIC
+    PRIVATE("Приватна"),
+    PUBLIC("Публічна");
+    public final String label;
 
+    Access(String label) {
+        this.label = label;
+    }
 }

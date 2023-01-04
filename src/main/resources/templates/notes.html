@@ -52,7 +52,7 @@
                     <td style="width:70%">
                       <pre th:utext="${note.html}"></pre>
                     </td>
-                    <td th:text="${note.access}" style="width:auto"></td>
+                    <td th:text="${note.access.label}" style="width:auto"></td>
                     <td style="width:auto">
                       <a class="btn clr" title="Редагувати" th:href="@{/note/edit/{id}(id=${note.id})}">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
