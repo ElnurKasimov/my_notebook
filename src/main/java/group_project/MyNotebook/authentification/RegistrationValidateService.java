@@ -37,9 +37,9 @@ public class RegistrationValidateService {
     }
 
     public enum RegistrationStatus {
-        ok("Регистрация прошла успешно"),
-        userNameEx("Введите имя латинскими символами и цифрами"),
-        invalidEmail("Такой email уже зарегистрирован");
+        ok("Реєстрація пройшла успішно"),
+        userNameEx("Введіть ім'я латинськими символами та цифрами"),
+        invalidEmail("Такий email вже зареєстрований");
 
         private final String description;
 
