@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("ALL")
 @RequiredArgsConstructor
 @Controller
 @RestController
@@ -28,10 +30,10 @@ public class NoteController {
     public ModelAndView getNotes() {
         ModelAndView notes = new ModelAndView("notes");
         try {
-            UserDto user = userService.findByUsername();
+            UserDto user = userService.findByEmail(getUserEmail());
             List<NoteDto> notesList = (user.getRoles().get(0).getName().equals("ROLE_ADMIN"))
                     ? noteService.findAll()
-                    : noteService.findAll(user);
+                    : noteService.findAll(user.getId());
             notes.addObject("notesList", notesList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -43,8 +45,7 @@ public class NoteController {
     public ModelAndView newNoteForm(Model model) {
         NoteDto noteDto = new NoteDto();
         noteDto.setAccess(Access.PRIVATE);
-        model.addAttribute("note", noteDto)
-        ;
+        model.addAttribute("note", noteDto);
         return new ModelAndView("createNote");
     }
 
@@ -64,7 +65,7 @@ public class NoteController {
     @PostMapping("/create")
     public RedirectView saveNote(@ModelAttribute("note") NoteDto note) {
         try {
-            UserDto userDto = userService.findByUsername();
+            UserDto userDto = userService.findByEmail(getUserEmail());
             note.setHtml(markdownToHTML(note.getContent()));
             note.setUser(userDto);
             noteService.create(note);
@@ -89,7 +90,7 @@ public class NoteController {
         ModelAndView share = new ModelAndView("sharedNote");
         NoteDto note = noteService.get(id);
         if (note == null || note.getAccess().equals(Access.PRIVATE)) {
-            share.addObject("message", "Такої нотатки не існує :(");
+            share.addObject("message", "Такой заметки не существует :(");
         } else if (note.getAccess().equals(Access.PUBLIC)) {
             share.addObject("note", note);
         }
@@ -103,5 +104,11 @@ public class NoteController {
         HtmlRenderer renderer = HtmlRenderer.builder()
                 .build();
         return renderer.render(document);
+    }
+
+    private String getUserEmail() {
+        return SecurityContextHolder
+                .getContext()
+                .getAuthentication().getName();
     }
 }

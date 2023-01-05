@@ -13,12 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+@SuppressWarnings("ClassCanBeRecord")
 @Controller
 @RequestMapping("/register")
 @RequiredArgsConstructor
 public class RegisterController {
     private final UserService userService;
     private final RoleService roleService;
+    private final RegistrationValidateService validateService;
 
     @GetMapping
     public ModelAndView register() {
@@ -28,20 +30,17 @@ public class RegisterController {
     @PostMapping("/create")
     public ModelAndView create(@ModelAttribute("user") UserDto user) {
         ModelAndView register = new ModelAndView("register");
-        try {
-            if (userService.isExistEmail(user.getEmail())) {
-                throw new RuntimeException(
-                        String.format("email %s уже зарегистрирован", user.getEmail()));
-            }
+        ModelAndView login = new ModelAndView("login");
+        RegistrationValidateService.RegistrationStatus validateStatus = validateService.validate(user);
+        if (validateStatus.equals(RegistrationValidateService.RegistrationStatus.ok)) {
             createUser(user);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return register.addObject("errorMessage", e.getMessage());
+            return login.addObject("status", validateStatus);
         }
-        return new ModelAndView("login");
+        register.addObject("status", validateStatus);
+        return register;
     }
 
-    private void createUser(UserDto user){
+    private void createUser(UserDto user) {
         userService.setPassword(user, user.getPassword());
         user.setRoles(List.of(roleService.findByName("ROLE_USER")));
         userService.create(user);

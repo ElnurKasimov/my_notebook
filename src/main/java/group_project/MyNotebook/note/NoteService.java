@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("ClassCanBeRecord")
 @Service
 @RequiredArgsConstructor
 public class NoteService {
@@ -25,13 +26,14 @@ public class NoteService {
                 .collect(Collectors.toList());
     }
 
-    public List<NoteDto> findAll(String username) {
-        return noteRepository.findByUsername(username)
+    public List<NoteDto> findAll(UUID userId) {
+        return noteRepository.findByUserId(userId)
                 .stream()
                 .map(noteConverter::mapToDto)
                 .collect(Collectors.toList());
     }
 
+    @SuppressWarnings("unused")
     public List<NoteDto> findAll(UserDto user){
         return noteRepository.findByUser(new UserConverter().mapToDao(user))
                 .stream()
@@ -39,21 +41,22 @@ public class NoteService {
                 .collect(Collectors.toList());
     }
 
-        public NoteDto get(UUID id){
+    public NoteDto get(UUID id) {
         return noteRepository.findById(id)
                 .map(noteConverter::mapToDto)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        }
+    }
 
-        public UUID create(NoteDto noteDto) {
-        return noteRepository.save(noteConverter.mapToDao(noteDto)).getId();
-            }
-        public void update(UUID id, NoteDto noteDto) {
+    public void create(NoteDto noteDto) {
+        noteRepository.save(noteConverter.mapToDao(noteDto));
+    }
+
+    public void update(UUID id, NoteDto noteDto) {
         noteDto.setId(id);
         noteRepository.findById(id)
                 .map((n) -> noteRepository.save(noteConverter.mapToDao(noteDto)))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        }
+    }
 
     public void delete(UUID id) {
         noteRepository.deleteById(id);

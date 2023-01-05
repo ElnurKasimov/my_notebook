@@ -11,6 +11,7 @@ import org.hibernate.type.SqlTypes;
 import java.util.Objects;
 import java.util.UUID;
 
+@SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 @Entity
 @Table(name = "notes")
 @Setter
@@ -38,7 +39,7 @@ public class Note {
     private Access access;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Override

@@ -1,5 +1,6 @@
 package group_project.MyNotebook.user;
 
+import group_project.MyNotebook.note.Note;
 import group_project.MyNotebook.role.Role;
 import jakarta.persistence.*;
 import lombok.*;
@@ -44,6 +45,10 @@ public class User {
     @ToString.Exclude
     private List<Role> roles;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Note> notes;
+
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
