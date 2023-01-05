@@ -29,6 +29,10 @@
               <input type="password" name="password" class="form-control" minlength="8" maxlength="100" required
                      placeholder="Пароль">
             </div>
+            <div class="form-group">
+              <input type="password" name="confirmPassword" class="form-control" minlength="8" maxlength="100" required
+                     placeholder="Підтвердіть пароль">
+            </div>
             <button class="btn signup" type="submit">Зареєструватись</button><br>
           </form>
           <div th:if="${status != null}">
