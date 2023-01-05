@@ -90,7 +90,7 @@ public class NoteController {
         ModelAndView share = new ModelAndView("sharedNote");
         NoteDto note = noteService.get(id);
         if (note == null || note.getAccess().equals(Access.PRIVATE)) {
-            share.addObject("message", "Такой заметки не существует :(");
+            share.addObject("message", "Такої нотатки не існує :(");
         } else if (note.getAccess().equals(Access.PUBLIC)) {
             share.addObject("note", note);
         }

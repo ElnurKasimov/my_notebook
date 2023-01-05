@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Мои заметки</title>
+    <title>Мої нотатки</title>
     <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/plugins/datatables/dataTables.bootstrap.css}">
     <link rel="stylesheet" th:href="@{/css/notes.css}">
@@ -16,19 +16,19 @@
     <div class="content-wrapper bordered">
       <section class="content-header">
         <h1>
-          Мои заметки
+          Мої нотатки
           <span th:if="${notesList != null}">
             <small th:text="${#arrays.length(notesList)}"></small>
             <small>шт.&nbsp</small>
           </span>
-          <a class="btn clr" title="Создать новую заметку" th:href="@{/note/create}">
-            Создать
+          <a class="btn clr" title="Створити нову нотатку" th:href="@{/note/create}">
+            Створити
           </a>
           <span style="float:right">
-            <small>Пользователь:&nbsp</small>
+            <small>Користувач:&nbsp</small>
             <p2 sec:authentication="name"></p2>
-            <a class="btn clr" title="Выход из аккаунта" th:href="@{/logout}">
-              Выйти
+            <a class="btn clr" title="Вихід з облікового запису" th:href="@{/logout}">
+              Вийти
             </a>
           </span>
         </h1>
@@ -41,10 +41,10 @@
                 <table id="full-feature-table-1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Имя</th>
-                    <th>Содержимое</th>
+                    <th>Ім'я</th>
+                    <th>Вміст</th>
                     <th>Доступ</th>
-                    <th>Действия</th>
+                    <th>Дії</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -53,15 +53,15 @@
                     <td style="width:70%">
                       <pre th:utext="${note.html}"></pre>
                     </td>
-                    <td th:text="${note.access}" style="width:auto"></td>
+                    <td th:text="${note.access.label}" style="width:auto"></td>
                     <td style="width:auto">
-                      <a class="btn clr" title="Изменить" th:href="@{/note/edit/{id}(id=${note.id})}">
+                      <a class="btn clr" title="Редагувати" th:href="@{/note/edit/{id}(id=${note.id})}">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                       </a>
-                      <a class="btn clr" title="Удалить" th:href="@{/note/delete/{id}(id=${note.id})}">
+                      <a class="btn clr" title="Видалити" th:href="@{/note/delete/{id}(id=${note.id})}">
                         <i class="fa fa-trash" aria-hidden="true"></i>
                       </a>
-                      <button class="btn clr" title="Копировать адрес ссылки"
+                      <button class="btn clr" title="Копіювати адресу посилання"
                               th:onclick="copyToClipboard([[@{/note/share/{id}(id=${note.id})}]])">
                         <i class="fa fa-link" aria-hidden="true"></i>
                       </button>
@@ -81,7 +81,16 @@
     <script th:src="@{/plugins/datatables/dataTables.bootstrap.min.js}"></script>
     <script>
       $(function () {
-        $('#full-feature-table-1').DataTable();
+        $('#full-feature-table-1').DataTable({
+          "language": {
+            "infoFiltered": "(відфільтровано з _MAX_ записів)",
+            "search": "Пошук:",
+            "lengthMenu": "Показати _MENU_ записів",
+            "infoEmpty": "Показано від 0 по 0 з 0 записів",
+            "info": "Показано від _START_ по _END_ з _TOTAL_ записів",
+            "emptyTable": "Ця таблиця не містить даних"
+          }
+        });
         $('#simple-table').DataTable({
           "paging": true,
           "lengthChange": false,
@@ -100,7 +109,7 @@
         inputc.select();
         document.execCommand('copy');
         inputc.parentNode.removeChild(inputc);
-        alert("Ссылка на заметку:\n " + inputc.value + "\n скопирована в буфер обмена.");
+        alert("Посилання на нотатку:\n " + inputc.value + "\n скопійовано в буфер обміну.");
       }
     </script>
   </body>
