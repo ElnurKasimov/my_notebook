@@ -19,7 +19,7 @@ public class MyUserJdbcDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         List<UserDetails> userData = jdbcTemplate.query(
-                "SELECT password, email, role" +
+                "SELECT password, email, role, user_name" +
                         " FROM users AS u" +
                         " INNER JOIN userRoles AS ur ON u.id = ur.user_id" +
                         " INNER JOIN roles AS r ON r.id = ur.role_id" +
@@ -40,6 +40,7 @@ public class MyUserJdbcDetailsService implements UserDetailsService {
             String role = rs.getString("role");
             String password = rs.getString("password");
             String email = rs.getString("email");
+            String name = rs.getString("user_name");
 
             return new UserDetails() {
                 @Override
@@ -55,6 +56,10 @@ public class MyUserJdbcDetailsService implements UserDetailsService {
                 @Override
                 public String getUsername() {
                     return email;
+                }
+
+                public String getName() {
+                    return name;
                 }
 
                 @Override

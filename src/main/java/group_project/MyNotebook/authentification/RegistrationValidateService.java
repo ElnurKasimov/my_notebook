@@ -22,13 +22,16 @@ public class RegistrationValidateService {
                 .compile("^[a-zA-Z0-9]+$", Pattern.CASE_INSENSITIVE);
     }
 
-    public RegistrationStatus validate(UserDto user) {
+    public RegistrationStatus validate(UserDto user, String confirm) {
         try {
             if (userService.isExistEmail(user.getEmail())) {
                 return RegistrationStatus.invalidEmail;
             }
             if (!isLatin(user.getName())) {
                 return RegistrationStatus.userNameEx;
+            }
+            if(!passwordConfirm(user.getPassword(), confirm)){
+                return RegistrationStatus.PASSWORD_NOT_MATCH;
             }
         } catch (EntityNotFoundException e) {
             e.printStackTrace();
@@ -39,7 +42,8 @@ public class RegistrationValidateService {
     public enum RegistrationStatus {
         ok("Реєстрація пройшла успішно"),
         userNameEx("Введіть ім'я латинськими символами та цифрами"),
-        invalidEmail("Такий email вже зареєстрований");
+        invalidEmail("Такий email вже зареєстрований"),
+        PASSWORD_NOT_MATCH("Введені паролі не співпадають");
 
         private final String description;
 
@@ -55,5 +59,12 @@ public class RegistrationValidateService {
     private boolean isLatin(String userName) {
         Matcher matcher = pattern.matcher(userName);
         return matcher.matches();
+    }
+
+    public boolean passwordConfirm(String password, String confirm){
+        if(password.equals(confirm)){
+            return true;
+        }
+        return false;
     }
 }

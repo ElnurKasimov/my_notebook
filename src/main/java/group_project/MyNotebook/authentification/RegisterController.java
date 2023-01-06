@@ -28,10 +28,10 @@ public class RegisterController {
     }
 
     @PostMapping("/create")
-    public ModelAndView create(@ModelAttribute("user") UserDto user) {
+    public ModelAndView create(@ModelAttribute("user") UserDto user, @ModelAttribute("confirmPassword") String confirm) {
         ModelAndView register = new ModelAndView("register");
         ModelAndView login = new ModelAndView("login");
-        RegistrationValidateService.RegistrationStatus validateStatus = validateService.validate(user);
+        RegistrationValidateService.RegistrationStatus validateStatus = validateService.validate(user, confirm);
         if (validateStatus.equals(RegistrationValidateService.RegistrationStatus.ok)) {
             createUser(user);
             return login.addObject("status", validateStatus);
