@@ -16,7 +16,8 @@
     <div class="content-wrapper bordered">
       <section class="content-header">
         <h1>
-          Мої нотатки
+          <span sec:authorize="hasRole('ROLE_ROLE_ADMIN')">Всі нотатки</span>
+          <span sec:authorize="hasRole('ROLE_ROLE_USER')">Мої нотатки</span>
           <span th:if="${notesList != null}">
             <small th:text="${#arrays.length(notesList)}"></small>
             <small>шт.&nbsp</small>
@@ -49,7 +50,15 @@
                   </thead>
                   <tbody>
                   <tr th:each="note : ${notesList}">
-                    <td th:text="${note.name}" style="width:15%"></td>
+                    <td style="width:15%">
+                      <div th:text="${note.name}"></div>
+                      <div sec:authorize="hasRole('ROLE_ROLE_ADMIN')">
+                        <div class="btn clr">
+                          <i class="fa fa-tags"></i>
+                          <span th:text="${note.user.email}"></span>
+                        </div>
+                      </div>
+                    </td>
                     <td style="width:70%">
                       <pre th:utext="${note.html}"></pre>
                     </td>

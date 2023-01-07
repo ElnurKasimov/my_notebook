@@ -34,10 +34,18 @@ public class NoteService {
     }
 
     @SuppressWarnings("unused")
-    public List<NoteDto> findAll(UserDto user){
+    public List<NoteDto> findAll(UserDto user) {
         return noteRepository.findByUser(new UserConverter().mapToDao(user))
                 .stream()
                 .map(noteConverter::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<NoteDto> findAllPublicAndAdminNotes() {
+        return findAll()
+                .stream()
+                .filter(f -> f.getUser().getRoles().get(0).getName().equals("ROLE_ADMIN") ||
+                            f.getAccess().equals(Access.PUBLIC))
                 .collect(Collectors.toList());
     }
 
