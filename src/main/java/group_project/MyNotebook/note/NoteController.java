@@ -33,7 +33,7 @@ public class NoteController {
             UserDto user = userService.findByEmail(getUserEmail());
             List<NoteDto> notesList = (user.getRoles().get(0).getName().equals("ROLE_ADMIN"))
                     ? noteService.findAllPublicAndAdminNotes()
-                    : noteService.findAll(user.getId());
+                    : noteService.findAll(user);
             notes.addObject("notesList", notesList);
         } catch (Exception e) {
             e.printStackTrace();
